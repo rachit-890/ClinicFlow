@@ -1,0 +1,34 @@
+# Clinzo — Docker Compose (dev services)
+# Usage: docker compose up -d
+
+services:
+  # ── PostgreSQL 16 ─────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: clinzo
+      POSTGRES_PASSWORD: clinzo
+      POSTGRES_DB: clinzo
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U clinzo"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  # ── Redis 7 ───────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  pgdata:
