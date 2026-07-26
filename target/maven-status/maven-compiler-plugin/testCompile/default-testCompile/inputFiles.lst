@@ -1,3 +1,6 @@
+/home/fedora/Clinzo/src/test/java/com/clinzo/AbstractIntegrationTest.java
 /home/fedora/Clinzo/src/test/java/com/clinzo/TestcontainersConfig.java
+/home/fedora/Clinzo/src/test/java/com/clinzo/service/BookingServiceConcurrencyTest.java
+/home/fedora/Clinzo/src/test/java/com/clinzo/service/HoldServiceTest.java
 /home/fedora/Clinzo/src/test/java/com/clinzo/service/SlotGenerationServiceTest.java
 /home/fedora/Clinzo/src/test/java/com/clinzo/validation/AvailabilityWindowValidatorTest.java

@@ -16,6 +16,8 @@ public interface SlotRepository extends JpaRepository<Slot, Long> {
     List<Slot> findByDoctorIdAndStatusAndStartTimeUtcBetween(
             Long doctorId, SlotStatus status, Instant from, Instant to);
 
+    List<Slot> findByDoctorIdAndStartTimeUtcBetween(Long doctorId, Instant from, Instant to);
+
     List<Slot> findByAvailabilityWindowIdAndStatus(Long windowId, SlotStatus status);
 
     /**

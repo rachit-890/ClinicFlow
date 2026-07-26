@@ -1,5 +1,6 @@
 package com.clinzo.service;
 
+import com.clinzo.AbstractIntegrationTest;
 import com.clinzo.domain.AvailabilityWindow;
 import com.clinzo.domain.Doctor;
 import com.clinzo.domain.Slot;
@@ -11,13 +12,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.clinzo.TestcontainersConfig;
-
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,19 +23,20 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Slot generation tests against a real Postgres 16 instance (Testcontainers).
  */
 @SpringBootTest
-@Import(TestcontainersConfig.class)
 @ActiveProfiles("test")
-class SlotGenerationServiceTest {
+class SlotGenerationServiceTest extends AbstractIntegrationTest {
 
     @Autowired private SlotGenerationService slotGenerationService;
     @Autowired private DoctorRepository doctorRepository;
     @Autowired private AvailabilityWindowRepository windowRepository;
     @Autowired private SlotRepository slotRepository;
+    @Autowired private com.clinzo.repository.BookingRepository bookingRepository;
 
     private Doctor doctor;
 
     @BeforeEach
     void setUp() {
+        bookingRepository.deleteAll();
         slotRepository.deleteAll();
         windowRepository.deleteAll();
         doctorRepository.deleteAll();
@@ -95,8 +93,6 @@ class SlotGenerationServiceTest {
     @Test
     @DisplayName("Buffer eating into last slot: 120 min window / 30 min slots / 10 min buffer = 3 slots")
     void bufferReducesSlotCount() {
-        // With 10-min buffer: each slot occupies 40 min (30+10)
-        // 3 slots = 30+10 + 30+10 + 30 = 120 min (last slot has no trailing buffer needed)
         Instant start = Instant.parse("2026-07-28T09:00:00Z");
         Instant end   = Instant.parse("2026-07-28T11:00:00Z"); // 120 min
 
@@ -104,10 +100,6 @@ class SlotGenerationServiceTest {
         List<Slot> slots = slotGenerationService.generateSlots(window);
 
         assertThat(slots).hasSize(3);
-        // Slot 1: 09:00-09:30, then 10 min buffer
-        // Slot 2: 09:40-10:10, then 10 min buffer
-        // Slot 3: 10:20-10:50, then 10 min buffer would push to 11:00 = cursor
-        // Slot 4 would start at 11:00, end at 11:30 — past window end → discarded
         assertThat(slots.get(0).getStartTimeUtc()).isEqualTo(Instant.parse("2026-07-28T09:00:00Z"));
         assertThat(slots.get(1).getStartTimeUtc()).isEqualTo(Instant.parse("2026-07-28T09:40:00Z"));
         assertThat(slots.get(2).getStartTimeUtc()).isEqualTo(Instant.parse("2026-07-28T10:20:00Z"));

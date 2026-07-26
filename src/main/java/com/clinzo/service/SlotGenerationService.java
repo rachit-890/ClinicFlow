@@ -75,18 +75,18 @@ public class SlotGenerationService {
             cursor = slotEnd.plus(buffer);
         }
 
-        // Save all — duplicates hit the unique constraint and are ignored
-        // We use saveAll which will throw on constraint violation,
-        // so we save one-by-one and swallow duplicates for idempotency.
-        List<Slot> saved = new ArrayList<>();
-        for (Slot slot : generated) {
-            try {
-                saved.add(slotRepository.saveAndFlush(slot));
-            } catch (org.springframework.dao.DataIntegrityViolationException e) {
-                log.debug("Slot already exists for doctor {} at {} — skipped (idempotent)",
-                        slot.getDoctorId(), slot.getStartTimeUtc());
-            }
-        }
+        // Fetch existing slots for doctor in window range to ensure idempotency without DB transaction abort
+        List<Slot> existingSlots = slotRepository.findByDoctorIdAndStartTimeUtcBetween(
+                window.getDoctorId(), window.getStartTimeUtc(), window.getEndTimeUtc());
+        java.util.Set<Instant> existingStartTimes = existingSlots.stream()
+                .map(Slot::getStartTimeUtc)
+                .collect(java.util.stream.Collectors.toSet());
+
+        List<Slot> slotsToSave = generated.stream()
+                .filter(slot -> !existingStartTimes.contains(slot.getStartTimeUtc()))
+                .toList();
+
+        List<Slot> saved = slotRepository.saveAll(slotsToSave);
 
         log.info("Generated {} slots for window {} (doctor {}), {} already existed",
                 saved.size(), window.getId(), window.getDoctorId(),

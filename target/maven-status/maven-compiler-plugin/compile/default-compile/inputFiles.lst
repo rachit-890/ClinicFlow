@@ -6,6 +6,10 @@
 /home/fedora/Clinzo/src/main/java/com/clinzo/domain/Doctor.java
 /home/fedora/Clinzo/src/main/java/com/clinzo/domain/Slot.java
 /home/fedora/Clinzo/src/main/java/com/clinzo/domain/SlotStatus.java
+/home/fedora/Clinzo/src/main/java/com/clinzo/dto/BookingRequestDTO.java
+/home/fedora/Clinzo/src/main/java/com/clinzo/dto/BookingResponseDTO.java
+/home/fedora/Clinzo/src/main/java/com/clinzo/dto/HoldRequestDTO.java
+/home/fedora/Clinzo/src/main/java/com/clinzo/dto/HoldResponseDTO.java
 /home/fedora/Clinzo/src/main/java/com/clinzo/exception/GlobalExceptionHandler.java
 /home/fedora/Clinzo/src/main/java/com/clinzo/exception/ResourceNotFoundException.java
 /home/fedora/Clinzo/src/main/java/com/clinzo/exception/SlotConflictException.java
@@ -14,6 +18,8 @@
 /home/fedora/Clinzo/src/main/java/com/clinzo/repository/BookingRepository.java
 /home/fedora/Clinzo/src/main/java/com/clinzo/repository/DoctorRepository.java
 /home/fedora/Clinzo/src/main/java/com/clinzo/repository/SlotRepository.java
+/home/fedora/Clinzo/src/main/java/com/clinzo/service/BookingService.java
+/home/fedora/Clinzo/src/main/java/com/clinzo/service/HoldService.java
 /home/fedora/Clinzo/src/main/java/com/clinzo/service/SlotGenerationService.java
 /home/fedora/Clinzo/src/main/java/com/clinzo/validation/AvailabilityWindowValid.java
 /home/fedora/Clinzo/src/main/java/com/clinzo/validation/AvailabilityWindowValidator.java

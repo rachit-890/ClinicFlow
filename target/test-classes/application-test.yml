@@ -1,5 +1,5 @@
-# Test profile — Testcontainers provides the actual Postgres instance.
-# Connection properties are injected dynamically by @ServiceConnection.
+# Test profile — Testcontainers provides Postgres 16 and Redis 7 instances.
+# Connection properties are injected dynamically by @DynamicPropertySource.
 spring:
   jpa:
     hibernate:

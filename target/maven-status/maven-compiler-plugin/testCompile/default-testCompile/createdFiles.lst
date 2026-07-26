@@ -1,0 +1,6 @@
+com/clinzo/service/BookingServiceConcurrencyTest.class
+com/clinzo/validation/AvailabilityWindowValidatorTest.class
+com/clinzo/service/SlotGenerationServiceTest.class
+com/clinzo/TestcontainersConfig.class
+com/clinzo/AbstractIntegrationTest.class
+com/clinzo/service/HoldServiceTest.class
