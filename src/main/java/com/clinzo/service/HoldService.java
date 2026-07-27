@@ -62,16 +62,23 @@ public class HoldService {
         }
 
         // Optimistic update of slot status AVAILABLE -> HELD
-        int updated = slotRepository.updateStatusWithOptimisticLock(
-                slotId,
-                SlotStatus.HELD,
-                slot.getVersion(),
-                List.of(SlotStatus.AVAILABLE),
-                Instant.now()
-        );
+        int updated;
+        try {
+            updated = slotRepository.updateStatusWithOptimisticLock(
+                    slotId,
+                    SlotStatus.HELD,
+                    slot.getVersion(),
+                    List.of(SlotStatus.AVAILABLE),
+                    Instant.now()
+            );
+        } catch (Exception e) {
+            redisTemplate.delete(redisKey);
+            log.warn("Exception during DB status update for slot {} — rolled back Redis key", slotId);
+            throw e;
+        }
 
         if (updated == 0) {
-            // Roll back Redis hold key on DB optimistic lock failure
+            // Roll back Redis hold key on DB optimistic lock failure (0 rows updated)
             redisTemplate.delete(redisKey);
             log.warn("Optimistic lock failure holding slot {} — status changed concurrently", slotId);
             throw new SlotConflictException("Concurrent modification on slot " + slotId);

@@ -36,10 +36,11 @@ class HoldServiceTest extends AbstractIntegrationTest {
     @Autowired private HoldService holdService;
     @Autowired private BookingService bookingService;
     @Autowired private DoctorRepository doctorRepository;
-    @Autowired private SlotRepository slotRepository;
+    @org.springframework.boot.test.mock.mockito.SpyBean
+    private SlotRepository slotRepository;
+
     @Autowired private BookingRepository bookingRepository;
     @Autowired private StringRedisTemplate redisTemplate;
-
     @Autowired private AvailabilityWindowRepository windowRepository;
 
     private Slot targetSlot;
@@ -164,5 +165,26 @@ class HoldServiceTest extends AbstractIntegrationTest {
                         .build()
         )).isInstanceOf(SlotConflictException.class)
           .hasMessageContaining("Invalid or expired hold token");
+    }
+
+    @Test
+    @DisplayName("Orphaned Redis key handling: if DB update fails (0 rows affected), Redis key is deleted immediately")
+    void holdSlot_dbUpdateFails_deletesOrphanedRedisKey() {
+        org.mockito.Mockito.doReturn(0).when(slotRepository)
+                .updateStatusWithOptimisticLock(
+                        org.mockito.ArgumentMatchers.any(),
+                        org.mockito.ArgumentMatchers.any(),
+                        org.mockito.ArgumentMatchers.anyInt(),
+                        org.mockito.ArgumentMatchers.any(),
+                        org.mockito.ArgumentMatchers.any()
+                );
+
+        assertThatThrownBy(() -> holdService.holdSlot(targetSlot.getId(), "patient-101"))
+                .isInstanceOf(SlotConflictException.class)
+                .hasMessageContaining("Concurrent modification");
+
+        // Verify Redis key is deleted and NOT left orphaned
+        String redisToken = redisTemplate.opsForValue().get("hold:" + targetSlot.getId());
+        assertThat(redisToken).isNull();
     }
 }

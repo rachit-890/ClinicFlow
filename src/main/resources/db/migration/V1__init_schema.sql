@@ -75,7 +75,7 @@ CREATE TABLE bookings (
     updated_at      TIMESTAMPTZ   NOT NULL DEFAULT NOW(),
 
     CONSTRAINT chk_booking_status CHECK (
-        status IN ('HELD', 'CONFIRMED', 'CANCELLED', 'RESCHEDULED')
+        status IN ('HELD', 'CONFIRMED', 'CANCELLED', 'RESCHEDULED', 'EXPIRED')
     )
 );
 

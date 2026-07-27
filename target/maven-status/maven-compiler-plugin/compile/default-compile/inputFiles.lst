@@ -1,4 +1,6 @@
 /home/fedora/Clinzo/src/main/java/com/clinzo/ClinzoApplication.java
+/home/fedora/Clinzo/src/main/java/com/clinzo/controller/BookingController.java
+/home/fedora/Clinzo/src/main/java/com/clinzo/controller/DoctorController.java
 /home/fedora/Clinzo/src/main/java/com/clinzo/domain/AuditLog.java
 /home/fedora/Clinzo/src/main/java/com/clinzo/domain/AvailabilityWindow.java
 /home/fedora/Clinzo/src/main/java/com/clinzo/domain/Booking.java
@@ -10,6 +12,10 @@
 /home/fedora/Clinzo/src/main/java/com/clinzo/dto/BookingResponseDTO.java
 /home/fedora/Clinzo/src/main/java/com/clinzo/dto/HoldRequestDTO.java
 /home/fedora/Clinzo/src/main/java/com/clinzo/dto/HoldResponseDTO.java
+/home/fedora/Clinzo/src/main/java/com/clinzo/dto/RescheduleRequestDTO.java
+/home/fedora/Clinzo/src/main/java/com/clinzo/dto/SlotResponseDTO.java
+/home/fedora/Clinzo/src/main/java/com/clinzo/dto/UpdateAvailabilityWindowRequestDTO.java
+/home/fedora/Clinzo/src/main/java/com/clinzo/dto/UpdateAvailabilityWindowResponseDTO.java
 /home/fedora/Clinzo/src/main/java/com/clinzo/exception/GlobalExceptionHandler.java
 /home/fedora/Clinzo/src/main/java/com/clinzo/exception/ResourceNotFoundException.java
 /home/fedora/Clinzo/src/main/java/com/clinzo/exception/SlotConflictException.java
@@ -18,8 +24,13 @@
 /home/fedora/Clinzo/src/main/java/com/clinzo/repository/BookingRepository.java
 /home/fedora/Clinzo/src/main/java/com/clinzo/repository/DoctorRepository.java
 /home/fedora/Clinzo/src/main/java/com/clinzo/repository/SlotRepository.java
+/home/fedora/Clinzo/src/main/java/com/clinzo/service/AuditService.java
+/home/fedora/Clinzo/src/main/java/com/clinzo/service/AvailabilityService.java
 /home/fedora/Clinzo/src/main/java/com/clinzo/service/BookingService.java
+/home/fedora/Clinzo/src/main/java/com/clinzo/service/HoldExpiryProcessor.java
+/home/fedora/Clinzo/src/main/java/com/clinzo/service/HoldExpiryScheduler.java
 /home/fedora/Clinzo/src/main/java/com/clinzo/service/HoldService.java
 /home/fedora/Clinzo/src/main/java/com/clinzo/service/SlotGenerationService.java
+/home/fedora/Clinzo/src/main/java/com/clinzo/service/SlotQueryService.java
 /home/fedora/Clinzo/src/main/java/com/clinzo/validation/AvailabilityWindowValid.java
 /home/fedora/Clinzo/src/main/java/com/clinzo/validation/AvailabilityWindowValidator.java
