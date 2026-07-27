@@ -173,4 +173,35 @@ class BookingControllerTest extends AbstractIntegrationTest {
                 .andExpect(jsonPath("$.status").value(409))
                 .andExpect(jsonPath("$.message").value("Target slot " + takenSlot.getId() + " is already booked."));
     }
+
+    @Test
+    @DisplayName("POST /bookings returns 201 Created on successful confirmation")
+    void confirmBooking_success_returns201() throws Exception {
+        com.clinzo.dto.BookingRequestDTO request = com.clinzo.dto.BookingRequestDTO.builder()
+                .slotId(slot2.getId())
+                .patientId("patient-confirm-1")
+                .build();
+
+        mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post("/bookings")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.slotId").value(slot2.getId()))
+                .andExpect(jsonPath("$.status").value("CONFIRMED"));
+    }
+
+    @Test
+    @DisplayName("POST /bookings returns 409 Conflict when slot is already booked")
+    void confirmBooking_conflict_returns409() throws Exception {
+        com.clinzo.dto.BookingRequestDTO request = com.clinzo.dto.BookingRequestDTO.builder()
+                .slotId(slot1.getId()) // slot1 is already booked
+                .patientId("patient-confirm-2")
+                .build();
+
+        mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post("/bookings")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.status").value(409));
+    }
 }

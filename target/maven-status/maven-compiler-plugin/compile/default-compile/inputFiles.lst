@@ -1,6 +1,7 @@
 /home/fedora/Clinzo/src/main/java/com/clinzo/ClinzoApplication.java
 /home/fedora/Clinzo/src/main/java/com/clinzo/controller/BookingController.java
 /home/fedora/Clinzo/src/main/java/com/clinzo/controller/DoctorController.java
+/home/fedora/Clinzo/src/main/java/com/clinzo/controller/SlotController.java
 /home/fedora/Clinzo/src/main/java/com/clinzo/domain/AuditLog.java
 /home/fedora/Clinzo/src/main/java/com/clinzo/domain/AvailabilityWindow.java
 /home/fedora/Clinzo/src/main/java/com/clinzo/domain/Booking.java

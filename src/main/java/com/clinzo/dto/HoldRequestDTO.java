@@ -12,8 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HoldRequestDTO {
-    @NotNull(message = "slotId is required")
-    private Long slotId;
 
     @NotBlank(message = "patientId is required")
     private String patientId;

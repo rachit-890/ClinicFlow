@@ -18,6 +18,17 @@ public class BookingController {
     private final BookingService bookingService;
 
     /**
+     * Confirms a booking (either directly or via a hold token).
+     * POST /bookings
+     */
+    @PostMapping
+    public ResponseEntity<BookingResponseDTO> confirmBooking(@Valid @RequestBody com.clinzo.dto.BookingRequestDTO request) {
+        log.info("REST request to confirm booking for slot {} by patient {}", request.getSlotId(), request.getPatientId());
+        BookingResponseDTO response = bookingService.confirmBooking(request);
+        return org.springframework.http.ResponseEntity.status(org.springframework.http.HttpStatus.CREATED).body(response);
+    }
+
+    /**
      * Cancels an existing booking.
      * DELETE /bookings/{id}
      */

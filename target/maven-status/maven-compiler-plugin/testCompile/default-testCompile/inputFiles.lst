@@ -1,0 +1,12 @@
+/home/fedora/Clinzo/src/test/java/com/clinzo/AbstractIntegrationTest.java
+/home/fedora/Clinzo/src/test/java/com/clinzo/TestcontainersConfig.java
+/home/fedora/Clinzo/src/test/java/com/clinzo/controller/BookingControllerTest.java
+/home/fedora/Clinzo/src/test/java/com/clinzo/controller/DoctorControllerTest.java
+/home/fedora/Clinzo/src/test/java/com/clinzo/controller/SlotControllerTest.java
+/home/fedora/Clinzo/src/test/java/com/clinzo/service/AvailabilityServiceTest.java
+/home/fedora/Clinzo/src/test/java/com/clinzo/service/BookingServiceConcurrencyTest.java
+/home/fedora/Clinzo/src/test/java/com/clinzo/service/HoldExpirySchedulerTest.java
+/home/fedora/Clinzo/src/test/java/com/clinzo/service/HoldServiceTest.java
+/home/fedora/Clinzo/src/test/java/com/clinzo/service/SlotGenerationServiceTest.java
+/home/fedora/Clinzo/src/test/java/com/clinzo/service/SlotQueryServiceTest.java
+/home/fedora/Clinzo/src/test/java/com/clinzo/validation/AvailabilityWindowValidatorTest.java
